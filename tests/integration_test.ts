@@ -22,9 +22,10 @@ Deno.test("POST / with 'hello' should return 'olleh'", async () => {
     const text = await response.text()
     assertEquals(text, 'olleh')
   } finally {
-    // Check if the process is still running before killing it
-    if (process.pid && process.status === undefined) {
+    // Ensure the process is terminated
+    if (process.pid) {
       process.kill()
+      await process.status // Wait for the process to terminate
     }
   }
 })
@@ -51,9 +52,10 @@ Deno.test("POST / with 'olleh' should return 'hello'", async () => {
     const text = await response.text()
     assertEquals(text, 'hello')
   } finally {
-    // Check if the process is still running before killing it
-    if (process.pid && process.status === undefined) {
+    // Ensure the process is terminated
+    if (process.pid) {
       process.kill()
+      await process.status // Wait for the process to terminate
     }
   }
 })
